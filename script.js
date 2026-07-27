@@ -1,651 +1,723 @@
-/* ======================================
-   Budget Tracker
+/* =======================================
+   BUDGET TRACKER
    Version 2.0
-   Part 1 - Data & Rendering
-====================================== */
+======================================= */
 
-const STORAGE_KEY = "budgetTracker";
+:root{
 
-/* ==========================
-   DEFAULT DATA
-========================== */
+    --green:#8D9F82;
+    --green-dark:#748A6B;
 
-const DEFAULT_DATA = {
-    budget: 250,
-    currentMonth: "",
-    expenses: [],
-    history: {}
-};
+    --background:#F7F7F2;
 
-let data = loadData();
+    --white:#FFFFFF;
 
-/* ==========================
-   ELEMENTS
-========================== */
+    --text:#303030;
 
-const expenseList = document.getElementById("expenseList");
-const emptyState = document.getElementById("emptyState");
+    --lightText:#777777;
 
-const remainingDollars = document.getElementById("remainingDollars");
-const remainingCents = document.getElementById("remainingCents");
+    --border:#E7E7E7;
 
-const settingsSpent = document.getElementById("settingsSpent");
-const settingsRemaining = document.getElementById("settingsRemaining");
+    --shadow:0 12px 35px rgba(0,0,0,.08);
 
-const spentHeader = document.getElementById("spentHeader");
-
-/* ==========================
-   STARTUP
-========================== */
-
-initialize();
-
-function initialize(){
-
-    checkForNewMonth();
-
-    render();
+    --radius:34px;
 
 }
 
-/* ==========================
-   LOAD / SAVE
-========================== */
+*{
 
-function loadData(){
+    margin:0;
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+    padding:0;
 
-    if(!saved){
+    box-sizing:border-box;
 
-        return structuredClone(DEFAULT_DATA);
+}
+
+body{
+
+    background:var(--background);
+
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+    color:var(--text);
+
+}
+
+main{
+
+    width:min(92%,500px);
+
+    margin:auto;
+
+    margin-top:20px;
+
+    padding-bottom:50px;
+
+}
+
+/* =======================================
+HEADER
+======================================= */
+
+.hero{
+
+    background:var(--green);
+
+    color:white;
+
+    height:360px;
+
+    position:relative;
+
+    border-bottom-left-radius:50% 14%;
+
+    border-bottom-right-radius:50% 14%;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.heroContent{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.subtitle{
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    font-size:.85rem;
+
+    opacity:.9;
+
+    margin-bottom:10px;
+
+}
+
+.hero h1{
+
+    font-size:2.1rem;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+.remainingAmount{
+
+    display:flex;
+
+    align-items:flex-start;
+
+}
+
+#remainingDollars{
+
+    font-size:4.6rem;
+
+    font-weight:700;
+
+    line-height:1;
+
+}
+
+#remainingCents{
+
+    font-size:1.7rem;
+
+    margin-top:12px;
+
+}
+
+.spentSummary{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    margin-top:18px;
+
+}
+
+.spentLabel{
+
+    font-size:.85rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    opacity:.85;
+
+}
+
+#spentHeader{
+
+    font-size:1.35rem;
+
+    font-weight:600;
+
+    margin-top:6px;
+
+}
+
+/* =======================================
+SETTINGS
+======================================= */
+
+.iconButton{
+
+    position:absolute;
+
+    top:22px;
+
+    right:22px;
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+}
+
+/* =======================================
+BUTTONS
+======================================= */
+
+.primaryButton{
+
+    width:100%;
+
+    height:110px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:var(--shadow);
+
+    margin:40px 0 35px;
+
+}
+
+.primaryButton:hover{
+
+    background:var(--green-dark);
+
+    transform:translateY(-2px);
+
+}
+
+.primaryButton:active{
+
+    transform:scale(.98);
+
+}
+
+.secondaryButton{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#E6E6E6;
+
+    padding:14px;
+
+    cursor:pointer;
+
+}
+
+.dangerButton{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#D9534F;
+
+    color:white;
+
+    padding:14px;
+
+    cursor:pointer;
+
+}
+
+/* =======================================
+HISTORY CARD
+======================================= */
+
+.historyCard{
+
+    background:white;
+
+    border-radius:34px;
+
+    margin-top:28px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.cardHeader{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+.cardHeader h2{
+
+    color:var(--green);
+
+    font-size:1.6rem;
+
+}
+
+.emptyState{
+
+    color:var(--lightText);
+
+    text-align:center;
+
+    padding:40px 0;
+
+}
+
+.expenseList{
+
+    list-style:none;
+
+}
+
+.expenseItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+    border-bottom:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.15s;
+
+}
+
+.expenseItem:last-child{
+
+    border:none;
+
+}
+
+.expenseItem:hover{
+
+    transform:translateX(4px);
+
+}
+
+.expenseDescription{
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}
+
+.expenseDate{
+
+    margin-top:5px;
+
+    color:var(--lightText);
+
+    font-size:.8rem;
+
+}
+
+.expenseAmount{
+
+    font-weight:700;
+
+    color:var(--green-dark);
+
+}
+
+/* =======================================
+MODALS
+======================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:25px;
+
+    z-index:1000;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.modalCard{
+
+    width:100%;
+
+    max-width:420px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    animation:pop .18s ease;
+
+}
+
+@keyframes pop{
+
+    from{
+
+        transform:scale(.94);
+
+        opacity:0;
 
     }
 
-    try{
+    to{
 
-        return JSON.parse(saved);
+        transform:scale(1);
 
-    }
-
-    catch{
-
-        return structuredClone(DEFAULT_DATA);
+        opacity:1;
 
     }
 
 }
 
-function saveData(){
+.modalCard h2{
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data)
-    );
+    margin-bottom:25px;
 
-}
+    text-align:center;
 
-/* ==========================
-   MONTH MANAGEMENT
-========================== */
-
-function getMonthKey(){
-
-    const now = new Date();
-
-    const year = now.getFullYear();
-
-    const month = String(now.getMonth()+1).padStart(2,"0");
-
-    return `${year}-${month}`;
+    color:var(--green);
 
 }
 
-function checkForNewMonth(){
+.modalCard label{
 
-    const current = getMonthKey();
+    display:block;
 
-    if(data.currentMonth===""){
+    margin-bottom:18px;
 
-        data.currentMonth=current;
-
-        saveData();
-
-        return;
-
-    }
-
-    if(current===data.currentMonth){
-
-        return;
-
-    }
-
-    /* Archive Previous Month */
-
-    data.history[data.currentMonth]=[
-        ...data.expenses
-    ];
-
-    data.expenses=[];
-
-    data.currentMonth=current;
-
-    saveData();
+    font-weight:600;
 
 }
 
-/* ==========================
-   CALCULATIONS
-========================== */
+.modalCard input{
 
-function getSpent(){
+    width:100%;
 
-    return data.expenses.reduce(
+    margin-top:8px;
 
-        (total,expense)=>{
+    border:1px solid var(--border);
 
-            return total+expense.amount;
+    border-radius:14px;
 
-        },
+    padding:15px;
 
-        0
+    font-size:1rem;
 
-    );
+    background:#FAFAFA;
 
 }
 
-function getRemaining(){
+.modalButtons{
 
-    return data.budget-getSpent();
+    display:flex;
 
-}
+    gap:12px;
 
-/* ==========================
-   RENDER
-========================== */
-
-function render(){
-
-    renderHeader();
-
-    renderExpenseList();
-
-    renderSettingsSummary();
+    margin-top:25px;
 
 }
 
-function renderHeader(){
+.settingsSummary{
 
-    const remaining=getRemaining();
+    background:#F4F4F4;
 
-    const dollars=Math.floor(remaining);
+    border-radius:18px;
 
-    const cents=Math.round(
+    padding:20px;
 
-        (remaining-dollars)*100
+    margin-top:10px;
 
-    );
+    display:flex;
 
-    remainingDollars.textContent=`$${dollars}`;
-
-    remainingCents.textContent=
-        `.${String(cents).padStart(2,"0")}`;
-
-spentHeader.textContent =
-    formatMoney(getSpent());
+    justify-content:space-between;
 
 }
 
-function renderSettingsSummary(){
+.settingsSummary div{
 
-    settingsSpent.textContent=
-        formatMoney(getSpent());
+    display:flex;
 
-    settingsRemaining.textContent=
-        formatMoney(getRemaining());
+    flex-direction:column;
 
-}
-
-function renderExpenseList(){
-
-    expenseList.innerHTML="";
-
-    if(data.expenses.length===0){
-
-        emptyState.style.display="block";
-
-        return;
-
-    }
-
-    emptyState.style.display="none";
-
-    [...data.expenses]
-
-        .reverse()
-
-        .forEach(expense=>{
-
-            const template=document
-                .getElementById("expenseTemplate")
-                .content
-                .cloneNode(true);
-
-            template.querySelector(
-                ".expenseDescription"
-            ).textContent=
-                expense.description;
-
-            template.querySelector(
-                ".expenseAmount"
-            ).textContent=
-                formatMoney(expense.amount);
-
-            template.querySelector(
-                ".expenseDate"
-            ).textContent=
-                formatDate(expense.date);
-
-            template.querySelector(
-                ".expenseItem"
-            ).dataset.id=
-                expense.id;
-
-            expenseList.appendChild(
-                template
-            );
-
-        });
+    gap:6px;
 
 }
 
-/* ==========================
-   HELPERS
-========================== */
+.settingsSummary strong{
 
-function formatMoney(value){
-
-    return value.toLocaleString(
-
-        "en-US",
-
-        {
-
-            style:"currency",
-
-            currency:"USD"
-
-        }
-
-    );
+    font-size:1.1rem;
 
 }
 
-function formatDate(dateString){
+/* =======================================
+PHONE TWEAKS
+======================================= */
 
-    const date=new Date(dateString);
+@media (max-width:500px){
 
-    return date.toLocaleDateString(
+    .hero{
 
-        "en-US",
+        height:330px;
 
-        {
+    }
 
-            month:"short",
+    #remainingDollars{
 
-            day:"numeric"
+        font-size:3.8rem;
 
-        }
+    }
 
-    );
+    #remainingCents{
+
+        font-size:1.4rem;
+
+    }
+
+    .historyCard{
+
+        padding:24px;
+
+    }
 
 }
 
-function createExpense(
+/* =======================================
+   HISTORY
+======================================= */
 
-    description,
+.historyButton{
 
-    amount
+    width:100%;
 
-){
+    margin-top:22px;
 
-    return{
+    padding:16px;
 
-        id:crypto.randomUUID(),
+    border:none;
 
-        description,
+    border-radius:16px;
 
-        amount,
+    background:var(--green);
 
-        date:new Date().toISOString()
+    color:white;
 
-    };
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
 
 }
-/* ======================================
-   Budget Tracker
-   Version 2.0
-   Part 2 - Events & Interaction
-====================================== */
 
-let editingExpenseId = null;
+.historyButton:hover{
 
-/* ==========================
-   ELEMENTS
-========================== */
+    background:var(--green-dark);
 
-const addExpenseButton = document.getElementById("addExpenseButton");
+}
 
-const settingsButton = document.getElementById("settingsButton");
+.historyModalCard{
 
-const expenseModal = document.getElementById("expenseModal");
+    max-height:80vh;
 
-const settingsModal = document.getElementById("settingsModal");
+    overflow-y:auto;
 
-const editModal = document.getElementById("editModal");
+}
 
-const descriptionInput = document.getElementById("descriptionInput");
+.monthModalCard{
 
-const amountInput = document.getElementById("amountInput");
+    max-height:85vh;
 
-const budgetInput = document.getElementById("budgetInput");
+    overflow-y:auto;
 
-const editDescription = document.getElementById("editDescription");
+}
 
-const editAmount = document.getElementById("editAmount");
+.historyList{
 
-/* ==========================
-   OPEN MODALS
-========================== */
+    display:flex;
 
-addExpenseButton.addEventListener("click", () => {
+    flex-direction:column;
 
-    descriptionInput.value = "";
-    amountInput.value = "";
+    gap:14px;
 
-    expenseModal.classList.remove("hidden");
+    margin:22px 0;
 
-    setTimeout(() => descriptionInput.focus(), 100);
+}
 
-});
+.historyItem{
 
-settingsButton.addEventListener("click", () => {
+    display:flex;
 
-    budgetInput.value = data.budget;
+    justify-content:space-between;
 
-    renderSettingsSummary();
+    align-items:center;
 
-    settingsModal.classList.remove("hidden");
+    padding:18px;
 
-});
+    border-radius:18px;
 
-/* ==========================
-   CLOSE MODALS
-========================== */
+    background:#F5F5F5;
 
-document.getElementById("cancelExpense")
-.addEventListener("click", () => {
+    cursor:pointer;
 
-    expenseModal.classList.add("hidden");
+    transition:.15s;
 
-});
+}
 
-document.getElementById("cancelSettings")
-.addEventListener("click", () => {
+.historyItem:hover{
 
-    settingsModal.classList.add("hidden");
+    background:#ECECEC;
 
-});
+    transform:translateX(4px);
 
-window.addEventListener("click", e => {
+}
 
-    if(e.target === expenseModal){
+.historyInfo{
 
-        expenseModal.classList.add("hidden");
+    display:flex;
 
-    }
+    flex-direction:column;
 
-    if(e.target === settingsModal){
+    gap:6px;
 
-        settingsModal.classList.add("hidden");
+}
 
-    }
+.historyMonth{
 
-    if(e.target === editModal){
+    font-weight:700;
 
-        editModal.classList.add("hidden");
+    font-size:1rem;
 
-    }
+}
 
-});
+.historyTotals{
 
-/* ==========================
-   SAVE NEW EXPENSE
-========================== */
+    color:var(--lightText);
 
-document.getElementById("saveExpense")
-.addEventListener("click", () => {
+    font-size:.9rem;
 
-    const description = descriptionInput.value.trim();
+}
 
-    const amount = parseFloat(amountInput.value);
+.historyArrow{
 
-    if(description === ""){
+    font-size:1.6rem;
 
-        alert("Please enter a description.");
+    color:var(--green-dark);
 
-        return;
+}
 
-    }
+#monthExpenseList{
 
-    if(isNaN(amount) || amount <= 0){
+    list-style:none;
 
-        alert("Enter a valid amount.");
+    margin-top:24px;
 
-        return;
+}
 
-    }
+#monthExpenseList .expenseItem{
 
-    data.expenses.push(
+    cursor:default;
 
-        createExpense(
+}
 
-            description,
+#monthExpenseList .expenseItem:hover{
 
-            amount
+    transform:none;
 
-        )
+}
 
-    );
+#monthEmptyState{
 
-    saveData();
+    margin-top:24px;
 
-    render();
-
-    expenseModal.classList.add("hidden");
-
-});
-
-/* ==========================
-   SAVE SETTINGS
-========================== */
-
-document.getElementById("saveSettings")
-.addEventListener("click", () => {
-
-    const budget = parseFloat(
-
-        budgetInput.value
-
-    );
-
-    if(isNaN(budget) || budget <= 0){
-
-        alert("Enter a valid budget.");
-
-        return;
-
-    }
-
-    data.budget = budget;
-
-    saveData();
-
-    render();
-
-    settingsModal.classList.add("hidden");
-
-});
-
-/* ==========================
-   CLICK EXPENSE
-========================== */
-
-expenseList.addEventListener("click", e => {
-
-    const row = e.target.closest(".expenseItem");
-
-    if(!row) return;
-
-    editingExpenseId = row.dataset.id;
-
-    const expense = data.expenses.find(
-
-        x => x.id === editingExpenseId
-
-    );
-
-    if(!expense) return;
-
-    editDescription.value = expense.description;
-
-    editAmount.value = expense.amount;
-
-    editModal.classList.remove("hidden");
-
-});
-
-/* ==========================
-   UPDATE EXPENSE
-========================== */
-
-document.getElementById("updateExpense")
-.addEventListener("click", () => {
-
-    const expense = data.expenses.find(
-
-        x => x.id === editingExpenseId
-
-    );
-
-    if(!expense) return;
-
-    const description = editDescription.value.trim();
-
-    const amount = parseFloat(
-
-        editAmount.value
-
-    );
-
-    if(description === ""){
-
-        alert("Description required.");
-
-        return;
-
-    }
-
-    if(isNaN(amount) || amount <= 0){
-
-        alert("Enter a valid amount.");
-
-        return;
-
-    }
-
-    expense.description = description;
-
-    expense.amount = amount;
-
-    saveData();
-
-    render();
-
-    editModal.classList.add("hidden");
-
-});
-
-/* ==========================
-   DELETE EXPENSE
-========================== */
-
-document.getElementById("deleteExpense")
-.addEventListener("click", () => {
-
-    if(!confirm("Delete this expense?")){
-
-        return;
-
-    }
-
-    data.expenses = data.expenses.filter(
-
-        x => x.id !== editingExpenseId
-
-    );
-
-    saveData();
-
-    render();
-
-    editModal.classList.add("hidden");
-
-});
-
-/* ==========================
-   ENTER KEY SUPPORT
-========================== */
-
-amountInput.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-        document
-        .getElementById("saveExpense")
-        .click();
-
-    }
-
-});
-
-budgetInput.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-        document
-        .getElementById("saveSettings")
-        .click();
-
-    }
-
-});
-
-editAmount.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-        document
-        .getElementById("updateExpense")
-        .click();
-
-    }
-
-});
-
-/* ==========================
-   INITIAL RENDER
-========================== */
-
-render();
+}
