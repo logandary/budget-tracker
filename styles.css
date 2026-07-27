@@ -1,0 +1,571 @@
+/* =======================================
+   BUDGET TRACKER
+   Version 2.0
+======================================= */
+
+:root{
+
+    --green:#8D9F82;
+    --green-dark:#748A6B;
+
+    --background:#F7F7F2;
+
+    --white:#FFFFFF;
+
+    --text:#303030;
+
+    --lightText:#777777;
+
+    --border:#E7E7E7;
+
+    --shadow:0 12px 35px rgba(0,0,0,.08);
+
+    --radius:34px;
+
+}
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    background:var(--background);
+
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+    color:var(--text);
+
+}
+
+main{
+
+    width:min(92%,500px);
+
+    margin:auto;
+
+    margin-top:20px;
+
+    padding-bottom:50px;
+
+}
+
+/* =======================================
+HEADER
+======================================= */
+
+.hero{
+
+    background:var(--green);
+
+    color:white;
+
+    height:360px;
+
+    position:relative;
+
+    border-bottom-left-radius:50% 14%;
+
+    border-bottom-right-radius:50% 14%;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.heroContent{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.subtitle{
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    font-size:.85rem;
+
+    opacity:.9;
+
+    margin-bottom:10px;
+
+}
+
+.hero h1{
+
+    font-size:2.1rem;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+.remainingAmount{
+
+    display:flex;
+
+    align-items:flex-start;
+
+}
+
+#remainingDollars{
+
+    font-size:4.6rem;
+
+    font-weight:700;
+
+    line-height:1;
+
+}
+
+#remainingCents{
+
+    font-size:1.7rem;
+
+    margin-top:12px;
+
+}
+
+.spentSummary{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    margin-top:18px;
+
+}
+
+.spentLabel{
+
+    font-size:.85rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    opacity:.85;
+
+}
+
+#spentHeader{
+
+    font-size:1.35rem;
+
+    font-weight:600;
+
+    margin-top:6px;
+
+}
+
+/* =======================================
+SETTINGS
+======================================= */
+
+.iconButton{
+
+    position:absolute;
+
+    top:22px;
+
+    right:22px;
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+}
+
+/* =======================================
+BUTTONS
+======================================= */
+
+.primaryButton{
+
+    width:100%;
+
+    height:110px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:var(--shadow);
+
+    margin:40px 0 35px;
+
+}
+
+.primaryButton:hover{
+
+    background:var(--green-dark);
+
+    transform:translateY(-2px);
+
+}
+
+.primaryButton:active{
+
+    transform:scale(.98);
+
+}
+
+.secondaryButton{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#E6E6E6;
+
+    padding:14px;
+
+    cursor:pointer;
+
+}
+
+.dangerButton{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#D9534F;
+
+    color:white;
+
+    padding:14px;
+
+    cursor:pointer;
+
+}
+
+/* =======================================
+HISTORY CARD
+======================================= */
+
+.historyCard{
+
+    background:white;
+
+    border-radius:34px;
+
+    margin-top:28px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.cardHeader{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+.cardHeader h2{
+
+    color:var(--green);
+
+    font-size:1.6rem;
+
+}
+
+.emptyState{
+
+    color:var(--lightText);
+
+    text-align:center;
+
+    padding:40px 0;
+
+}
+
+.expenseList{
+
+    list-style:none;
+
+}
+
+.expenseItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+    border-bottom:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.15s;
+
+}
+
+.expenseItem:last-child{
+
+    border:none;
+
+}
+
+.expenseItem:hover{
+
+    transform:translateX(4px);
+
+}
+
+.expenseDescription{
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}
+
+.expenseDate{
+
+    margin-top:5px;
+
+    color:var(--lightText);
+
+    font-size:.8rem;
+
+}
+
+.expenseAmount{
+
+    font-weight:700;
+
+    color:var(--green-dark);
+
+}
+
+/* =======================================
+MODALS
+======================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:25px;
+
+    z-index:1000;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.modalCard{
+
+    width:100%;
+
+    max-width:420px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    animation:pop .18s ease;
+
+}
+
+@keyframes pop{
+
+    from{
+
+        transform:scale(.94);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+.modalCard h2{
+
+    margin-bottom:25px;
+
+    text-align:center;
+
+    color:var(--green);
+
+}
+
+.modalCard label{
+
+    display:block;
+
+    margin-bottom:18px;
+
+    font-weight:600;
+
+}
+
+.modalCard input{
+
+    width:100%;
+
+    margin-top:8px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:15px;
+
+    font-size:1rem;
+
+    background:#FAFAFA;
+
+}
+
+.modalButtons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+.settingsSummary{
+
+    background:#F4F4F4;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-top:10px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+.settingsSummary div{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.settingsSummary strong{
+
+    font-size:1.1rem;
+
+}
+
+/* =======================================
+PHONE TWEAKS
+======================================= */
+
+@media (max-width:500px){
+
+    .hero{
+
+        height:330px;
+
+    }
+
+    #remainingDollars{
+
+        font-size:3.8rem;
+
+    }
+
+    #remainingCents{
+
+        font-size:1.4rem;
+
+    }
+
+    .historyCard{
+
+        padding:24px;
+
+    }
+
+}
