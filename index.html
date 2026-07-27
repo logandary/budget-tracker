@@ -1,66 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Budget Tracker</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+          href="styles.css">
 
 </head>
 
 <body>
 
-    <!-- ===========================
-         HEADER
-    ============================ -->
+<!-- ==========================================
+     HOME
+========================================== -->
 
-    <header class="hero">
+<header class="hero">
 
-        <button
-            id="settingsButton"
-            class="iconButton"
-            aria-label="Settings">
+    <button
+        id="settingsButton"
+        class="iconButton"
+        aria-label="Settings">
 
-            ⚙
+        ⚙
 
-        </button>
+    </button>
 
-<div class="heroContent">
+    <div class="heroContent">
 
-    <h1>
-        Budget Tracker
-    </h1>
+        <h1>
+            Budget Tracker
+        </h1>
 
-    <p class="subtitle">
-        Remaining
-    </p>
+        <p class="subtitle">
+            Remaining
+        </p>
 
-    <div class="moneySection">
+        <div class="moneySection">
 
-        <div class="remainingAmount">
+            <div class="remainingAmount">
 
-            <span id="remainingDollars">
-                $250
-            </span>
+                <span id="remainingDollars">
+                    $250
+                </span>
 
-            <span id="remainingCents">
-                .00
-            </span>
+                <span id="remainingCents">
+                    .00
+                </span>
+
+            </div>
+
+            <div class="spentSummary">
+
+                <span class="spentLabel">
+                    Spent This Month
+                </span>
+
+                <span id="spentHeader">
+                    $0.00
+                </span>
+
+            </div>
 
         </div>
 
-        <div class="spentSummary">
+    </div>
 
-            <span class="spentLabel">
-                Spent This Month
-            </span>
+</header>
 
-            <span id="spentHeader">
-                $0.00
-            </span>
+<main>
+
+    <!-- ===========================
+         ADD EXPENSE
+    ============================ -->
+
+    <button
+        id="addExpenseButton"
+        class="primaryButton">
+
+        ADD EXPENSE
+
+    </button>
+
+    <!-- ===========================
+         CURRENT MONTH
+    ============================ -->
+
+    <section class="historyCard">
+
+        <div class="cardHeader">
+
+            <h2>
+
+                Current Month
+
+            </h2>
+
+        </div>
+
+        <div
+            id="emptyState"
+            class="emptyState">
+
+            No expenses yet.
+
+        </div>
+
+        <ul
+            id="expenseList"
+            class="expenseList">
+
+        </ul>
+
+    </section>
+
+</main>
+
+<!-- ==========================================
+     ADD EXPENSE MODAL
+========================================== -->
+
+<div
+    id="expenseModal"
+    class="modal hidden">
+
+    <div class="modalCard">
+
+        <h2>
+
+            Add Expense
+
+        </h2>
+
+        <label>
+
+            Description
+
+            <input
+                id="descriptionInput"
+                type="text"
+                placeholder="Starbucks">
+
+        </label>
+
+        <label>
+
+            Amount
+
+            <input
+                id="amountInput"
+                type="number"
+                step="0.01"
+                placeholder="6.25">
+
+        </label>
+
+        <div class="modalButtons">
+
+            <button
+                id="cancelExpense"
+                class="secondaryButton">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="saveExpense"
+                class="primaryButton">
+
+                Save
+
+            </button>
 
         </div>
 
@@ -68,281 +184,329 @@
 
 </div>
 
-    </header>
+<!-- ==========================================
+     SETTINGS MODAL
+========================================== -->
 
-    <!-- ===========================
-         MAIN CONTENT
-    ============================ -->
+<div
+    id="settingsModal"
+    class="modal hidden">
 
-    <main>
+    <div class="modalCard">
 
-        <!-- Add Expense Button -->
+        <h2>
+
+            Settings
+
+        </h2>
+
+        <label>
+
+            Monthly Budget
+
+            <input
+                id="budgetInput"
+                type="number"
+                step="0.01">
+
+        </label>
+
+        <div class="settingsSummary">
+
+            <div>
+
+                <span>Spent</span>
+
+                <strong id="settingsSpent">
+
+                    $0.00
+
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span>Remaining</span>
+
+                <strong id="settingsRemaining">
+
+                    $250.00
+
+                </strong>
+
+            </div>
+
+        </div>
 
         <button
-            id="addExpenseButton"
-            class="primaryButton">
+            id="historyButton"
+            class="historyButton">
 
-            ADD EXPENSE
+            View Budget History
 
         </button>
 
-        <!-- Recent History -->
+        <div class="modalButtons">
 
-        <section class="historyCard">
+            <button
+                id="cancelSettings"
+                class="secondaryButton">
 
-            <div class="cardHeader">
+                Cancel
 
-                <h2>
-                    Recent History
-                </h2>
+            </button>
 
-            </div>
+            <button
+                id="saveSettings"
+                class="primaryButton">
 
-            <div
-                id="emptyState"
-                class="emptyState">
+                Save
 
-                No expenses yet.
-
-            </div>
-
-            <ul
-                id="expenseList"
-                class="expenseList">
-
-            </ul>
-
-        </section>
-
-    </main>
-
-    <!-- ===========================
-         ADD EXPENSE MODAL
-    ============================ -->
-
-    <div
-        id="expenseModal"
-        class="modal hidden">
-
-        <div class="modalCard">
-
-            <h2>
-                Add Expense
-            </h2>
-
-            <label>
-
-                Description
-
-                <input
-                    id="descriptionInput"
-                    type="text"
-                    placeholder="Starbucks">
-
-            </label>
-
-            <label>
-
-                Amount
-
-                <input
-                    id="amountInput"
-                    type="number"
-                    step="0.01"
-                    placeholder="6.25">
-
-            </label>
-
-            <div class="modalButtons">
-
-                <button
-                    id="cancelExpense"
-                    class="secondaryButton">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    id="saveExpense"
-                    class="primaryButton">
-
-                    Save
-
-                </button>
-
-            </div>
+            </button>
 
         </div>
 
     </div>
 
-    <!-- ===========================
-         SETTINGS MODAL
-    ============================ -->
+</div>
 
-    <div
-        id="settingsModal"
-        class="modal hidden">
+<!-- ==========================================
+     HISTORY MODAL
+========================================== -->
 
-        <div class="modalCard">
+<div
+    id="historyModal"
+    class="modal hidden">
 
-            <h2>
-                Settings
-            </h2>
+    <div class="modalCard historyModalCard">
 
-            <label>
+        <h2>
 
-                Monthly Budget
+            Budget History
 
-                <input
-                    id="budgetInput"
-                    type="number"
-                    step="0.01">
+        </h2>
 
-            </label>
+        <div
+            id="historyList"
+            class="historyList">
 
-            <div class="settingsSummary">
+            <!-- JavaScript inserts months here -->
 
-                <div>
+        </div>
 
-                    <span>Spent</span>
+        <div class="modalButtons">
 
-                    <strong id="settingsSpent">
+            <button
+                id="closeHistory"
+                class="secondaryButton">
 
-                        $0.00
+                Close
 
-                    </strong>
-
-                </div>
-
-                <div>
-
-                    <span>Remaining</span>
-
-                    <strong id="settingsRemaining">
-
-                        $250.00
-
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <div class="modalButtons">
-
-                <button
-                    id="cancelSettings"
-                    class="secondaryButton">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    id="saveSettings"
-                    class="primaryButton">
-
-                    Save
-
-                </button>
-
-            </div>
+            </button>
 
         </div>
 
     </div>
 
-    <!-- ===========================
-         EDIT EXPENSE MODAL
-    ============================ -->
+</div>
 
-    <div
-        id="editModal"
-        class="modal hidden">
+<!-- ==========================================
+     MONTH DETAIL MODAL
+========================================== -->
 
-        <div class="modalCard">
+<div
+    id="monthModal"
+    class="modal hidden">
 
-            <h2>
-                Edit Expense
-            </h2>
+    <div class="modalCard monthModalCard">
 
-            <label>
+        <h2 id="monthTitle">
 
-                Description
+            July 2026
 
-                <input
-                    id="editDescription"
-                    type="text">
+        </h2>
 
-            </label>
+        <div class="settingsSummary">
 
-            <label>
+            <div>
 
-                Amount
+                <span>Budget</span>
 
-                <input
-                    id="editAmount"
-                    type="number"
-                    step="0.01">
+                <strong id="monthBudget">
 
-            </label>
+                    $250.00
 
-            <div class="modalButtons">
+                </strong>
 
-                <button
-                    id="deleteExpense"
-                    class="dangerButton">
+            </div>
 
-                    Delete
+            <div>
 
-                </button>
+                <span>Spent</span>
 
-                <button
-                    id="updateExpense"
-                    class="primaryButton">
+                <strong id="monthSpent">
 
-                    Save
+                    $81.25
 
-                </button>
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span>Remaining</span>
+
+                <strong id="monthRemaining">
+
+                    $168.75
+
+                </strong>
 
             </div>
 
         </div>
 
+        <ul
+            id="monthExpenseList"
+            class="expenseList">
+
+        </ul>
+
+        <div
+            id="monthEmptyState"
+            class="emptyState hidden">
+
+            No expenses for this month.
+
+        </div>
+
+        <div class="modalButtons">
+
+            <button
+                id="closeMonth"
+                class="secondaryButton">
+
+                Back
+
+            </button>
+
+        </div>
+
     </div>
 
-    <!-- ===========================
-         TEMPLATE FOR EXPENSE ROW
-         (Hidden - JavaScript clones this)
-    ============================ -->
+</div>
 
-    <template id="expenseTemplate">
+<!-- ==========================================
+     EDIT EXPENSE MODAL
+========================================== -->
 
-        <li class="expenseItem">
+<div
+    id="editModal"
+    class="modal hidden">
 
-            <div class="expenseInfo">
+    <div class="modalCard">
 
-                <div class="expenseDescription">
-                    Starbucks
-                </div>
+        <h2>
 
-                <div class="expenseDate">
-                    July 27
-                </div>
+            Edit Expense
 
-            </div>
+        </h2>
 
-            <div class="expenseAmount">
-                $6.25
-            </div>
+        <label>
 
-        </li>
+            Description
 
-    </template>
+            <input
+                id="editDescription"
+                type="text">
 
-    <script src="script.js"></script>
+        </label>
+
+        <label>
+
+            Amount
+
+            <input
+                id="editAmount"
+                type="number"
+                step="0.01">
+
+        </label>
+
+        <div class="modalButtons">
+
+            <button
+                id="deleteExpense"
+                class="dangerButton">
+
+                Delete
+
+            </button>
+
+            <button
+                id="updateExpense"
+                class="primaryButton">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     EXPENSE TEMPLATE
+========================================== -->
+
+<template id="expenseTemplate">
+
+    <li class="expenseItem">
+
+        <div class="expenseInfo">
+
+            <div class="expenseDescription"></div>
+
+            <div class="expenseDate"></div>
+
+        </div>
+
+        <div class="expenseAmount"></div>
+
+    </li>
+
+</template>
+
+<!-- ==========================================
+     HISTORY TEMPLATE
+========================================== -->
+
+<template id="historyTemplate">
+
+    <div class="historyItem">
+
+        <div class="historyInfo">
+
+            <div class="historyMonth"></div>
+
+            <div class="historyTotals"></div>
+
+        </div>
+
+        <div class="historyArrow">
+
+            ›
+
+        </div>
+
+    </div>
+
+</template>
+
+<script src="script.js"></script>
 
 </body>
 </html>
