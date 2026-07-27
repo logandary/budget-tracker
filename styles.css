@@ -569,3 +569,155 @@ PHONE TWEAKS
     }
 
 }
+
+/* =======================================
+   HISTORY
+======================================= */
+
+.historyButton{
+
+    width:100%;
+
+    margin-top:22px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.historyButton:hover{
+
+    background:var(--green-dark);
+
+}
+
+.historyModalCard{
+
+    max-height:80vh;
+
+    overflow-y:auto;
+
+}
+
+.monthModalCard{
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+}
+
+.historyList{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    margin:22px 0;
+
+}
+
+.historyItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:#F5F5F5;
+
+    cursor:pointer;
+
+    transition:.15s;
+
+}
+
+.historyItem:hover{
+
+    background:#ECECEC;
+
+    transform:translateX(4px);
+
+}
+
+.historyInfo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.historyMonth{
+
+    font-weight:700;
+
+    font-size:1rem;
+
+}
+
+.historyTotals{
+
+    color:var(--lightText);
+
+    font-size:.9rem;
+
+}
+
+.historyArrow{
+
+    font-size:1.6rem;
+
+    color:var(--green-dark);
+
+}
+
+#monthExpenseList{
+
+    list-style:none;
+
+    margin-top:24px;
+
+}
+
+#monthExpenseList .expenseItem{
+
+    cursor:default;
+
+}
+
+#monthExpenseList .expenseItem:hover{
+
+    transform:none;
+
+}
+
+#monthEmptyState{
+
+    margin-top:24px;
+
+}
